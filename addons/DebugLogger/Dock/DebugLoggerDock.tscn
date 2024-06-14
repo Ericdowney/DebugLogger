@@ -1,0 +1,114 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdbxkfapiflhq"]
+
+[ext_resource type="Script" path="res://addons/DebugLogger/Dock/DebugLoggerDock.gd" id="1_w27dl"]
+
+[node name="DebugLoggerDock" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_w27dl")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="FilterContainer" type="VBoxContainer" parent="HSplitContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/FilterContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 44)
+layout_mode = 2
+
+[node name="AddButton" type="Button" parent="HSplitContainer/FilterContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 2.08165e-12)
+layout_mode = 2
+text = "+"
+
+[node name="RemoveButton" type="Button" parent="HSplitContainer/FilterContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 2.08165e-12)
+layout_mode = 2
+text = "-"
+
+[node name="FilterItemList" type="ItemList" parent="HSplitContainer/FilterContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="OutputContainer" type="VBoxContainer" parent="HSplitContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/OutputContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 44)
+layout_mode = 2
+
+[node name="StartStopButton" type="Button" parent="HSplitContainer/OutputContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 2.08165e-12)
+layout_mode = 2
+text = "Start"
+
+[node name="ClearButton" type="Button" parent="HSplitContainer/OutputContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 2.08165e-12)
+layout_mode = 2
+text = "Clear"
+
+[node name="Spacer" type="HBoxContainer" parent="HSplitContainer/OutputContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/OutputContainer/HBoxContainer"]
+layout_mode = 2
+tooltip_text = "The number of allowed lines before lines are truncated. (FIFO order)"
+
+[node name="Label" type="Label" parent="HSplitContainer/OutputContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Line Limit: "
+
+[node name="LineLimitEdit" type="LineEdit" parent="HSplitContainer/OutputContainer/HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "1000"
+placeholder_text = "Line Limit"
+
+[node name="ExportButton" type="Button" parent="HSplitContainer/OutputContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 2.08165e-12)
+layout_mode = 2
+text = "Export"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/OutputContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel" type="Panel" parent="HSplitContainer/OutputContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LoggerOutputLabel" type="RichTextLabel" parent="HSplitContainer/OutputContainer/ScrollContainer/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="pressed" from="HSplitContainer/FilterContainer/HBoxContainer/AddButton" to="." method="_on_add_button_pressed"]
+[connection signal="pressed" from="HSplitContainer/FilterContainer/HBoxContainer/RemoveButton" to="." method="_on_remove_button_pressed"]
+[connection signal="item_selected" from="HSplitContainer/FilterContainer/FilterItemList" to="." method="_on_filter_item_list_item_selected"]
+[connection signal="pressed" from="HSplitContainer/OutputContainer/HBoxContainer/StartStopButton" to="." method="_on_start_stop_button_pressed"]
+[connection signal="pressed" from="HSplitContainer/OutputContainer/HBoxContainer/ClearButton" to="." method="_on_clear_button_pressed"]
+[connection signal="text_changed" from="HSplitContainer/OutputContainer/HBoxContainer/HBoxContainer/LineLimitEdit" to="." method="_on_line_limit_edit_text_changed"]
+[connection signal="pressed" from="HSplitContainer/OutputContainer/HBoxContainer/ExportButton" to="." method="_on_export_button_pressed"]
